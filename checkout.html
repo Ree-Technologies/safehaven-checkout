@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SafeHaven Checkout Demo</title>
+  </head>
+  <body>
+    <h1>Checkout Demo</h1>
+    <button onclick="payWithSafeHaven()">Click Me!</button>
+
+    <script src="/js.js" type="module"></script>
+
+    <script src="https://checkout.safehavenmfb.com/assets/checkout.min.js"></script>
+    <script type="text/javascript">
+      const referenceCode = "" + Math.floor(Math.random() * 1000000000 + 1);
+      console.log(referenceCode);
+      let payWithSafeHaven = () => {
+        let checkOut = SafeHavenCheckout({
+          environment: "production", //sandbox || production
+          clientId: "85bff8d14c6ecdb71095b152df9417a5",
+          referenceCode: referenceCode,
+          customer: {
+            firstName: "Eghosa",
+            lastName: "Enohuawanre",
+            emailAddress: "development@reepay.ng",
+            phoneNumber: "+2347088635201",
+          },
+          currency: "NGN", // Must be NGN
+          amount: 100,
+          //feeBearer: "account", // account = We charge you, customer = We charge the customer
+          settlementAccount: {
+            bankCode: "090286", // 999240 = Sandbox || 090286 = Production
+            accountNumber: "0113465862",
+          },
+          redirectUrl: "https://reepay.ng",
+          webhookUrl:
+            "https://eeca-102-91-72-241.ngrok-free.app/webhook/safehaven/?secret=skskskkskskskskksksksk",
+          //customIconUrl: "https://safehavenmfb.com/assets/images/logo1.svg",
+          metadata: {
+            serviceType: "wallet_funding",
+            email: "anderclace@gmail.com",
+          },
+          onClose: () => {
+            console.log("Checkout Closed");
+          },
+          callback: (response) => {
+            console.log(response);
+          },
+        });
+      };
+    </script>
+  </body>
+</html>
